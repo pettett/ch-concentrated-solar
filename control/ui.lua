@@ -138,9 +138,10 @@ ui.update_gui = function(gui)
 	local solar_mult = control_util.surface_solar_mult(surface)
 
 	local mirror_count = table_size(mirrors)
-	local current_production = fluid.temperature * prototypes.fluid[fluid.name].heat_capacity * 0.00001
+	local unit_ratio = 0.000001
+	local current_production = fluid.temperature * prototypes.fluid[fluid.name].heat_capacity * unit_ratio
 	local max_production = mirror_count * solar_mult * control_util.fluid_temp_per_mirror *
-		prototypes.fluid[fluid.name].heat_capacity * 0.000001 * (1.0 + tower.quality.level * 0.3)
+		prototypes.fluid[fluid.name].heat_capacity * unit_ratio * (1.0 + tower.quality.level * 0.3)
 
 
 	content_flow.sun_progressbar.value = daylight
