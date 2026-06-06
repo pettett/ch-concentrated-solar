@@ -9,16 +9,16 @@ shared_util.solar_laser_tower = shared_util.mod_prefix .. "solar-laser-tower"
 shared_util.heliostat_mirror = shared_util.mod_prefix .. "heliostat-mirror"
 
 ---@type uint
-shared_util.solar_max_temp = 600
+shared_util.solar_max_temp = settings.startup["ch-solar-max-temp"].value -- 600
 
 
 
 ---@type uint
-shared_util.fluid_temp_per_mirror = 1.1
+shared_util.fluid_temp_per_mirror = settings.startup["ch-fluid-temp-per-mirror"].value -- 1.1
 
 
 
-shared_util.tower_capture_radius = 35
+shared_util.tower_capture_radius =  settings.startup["ch-tower-capture-radius"].value -- 35
 shared_util.tower_capture_radius_sqr = shared_util.tower_capture_radius ^ 2
 
 

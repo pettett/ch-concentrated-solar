@@ -83,14 +83,14 @@ data:extend {
 			-- fluid_consumption = 1,
 			-- warmup = 1,
 			cooldown          = 1,
-			range             = 150,
-			min_range         = 6,
+			range             = settings.startup["ch-laser-max-range"].value,
+			min_range         = settings.startup["ch-laser-min-range"].value,
 			turn_range        = 1.5 / 3.0,
 			fluid_consumption = 10,
 			--source_direction_count = 64,
 			--source_offset = { 0, -3.423489 / 4 },
 			ammo_category     = "laser",
-			damage_modifier   = 1,
+			damage_modifier   = settings.startup["ch-laser-dmg-modifier"].value,
 			ammo_type         =
 			{
 				action =
