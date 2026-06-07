@@ -1,6 +1,5 @@
 local data_util = require("data-util")
 local sounds = require("__base__.prototypes.entity.sounds")
-local util = require "util"
 local hit_effects = require("__base__.prototypes.entity.hit-effects")
 
 
@@ -96,22 +95,6 @@ data:extend {
 				action =
 				{
 					{
-						type = "area",
-						radius = 2.5,
-						action_delivery =
-						{
-							type = "instant",
-							target_effects =
-							{
-								{
-									type = "damage",
-									damage = { amount = 3, type = "laser" },
-									apply_damage_to_trees = false
-								}
-							}
-						}
-					},
-					{
 						type = "direct",
 						action_delivery =
 						{
@@ -130,9 +113,24 @@ data:extend {
 								-- 	type = "script",
 								-- 	effect_id = data_util.mod_prefix .. "sunlight-laser-damage"
 								-- },
-
 							}
 						},
+					},
+					{
+						type = "area",
+						radius = 2.5,
+						action_delivery =
+						{
+							type = "instant",
+							target_effects =
+							{
+								{
+									type = "damage",
+									damage = { amount = 3, type = "laser" },
+									apply_damage_to_trees = false
+								}
+							}
+						}
 					}
 				}
 			}
