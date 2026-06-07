@@ -1,0 +1,20 @@
+# Editor/OS
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+
+# IDEs
+.vscode/
+.idea/
+*.code-workspace
+
+# Logs
+*.log
+
+# Mod build artifacts
+*.zip

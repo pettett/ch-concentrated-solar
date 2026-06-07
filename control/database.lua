@@ -83,22 +83,30 @@ function db.link_mirror_to_tower(args)
 	local mid = mirror.unit_number
 
 	if db.valid_mid(mid) then
-		if storage.mirrors[mid].tower then
-			-- If this mirror has a tower, do something about it
+                if storage.mirrors[mid].tower then
+                        -- If this mirror has a tower, do something about it    
 
-			assert(storage.mirrors[mid].tower.valid,
-				"DATABASE CORRUPTION: Mirror is linked to an invalid tower")
-
-			if storage.mirrors[mid].tower.unit_number == tower.unit_number then
-				-- We are already linked to this tower!
-				return
-			else
-				--add the previous link to in_range
-				db.mark_in_range(mid, storage.mirrors[mid].tower)
-				-- Clean up previous link
-				db.remove_mirror_from_tower { mid = mid, tid = storage.mirrors[mid].tower.unit_number }
-			end
-		end
+                        local prior_tower = storage.mirrors[mid].tower
+                        if not prior_tower.valid then
+                                -- Clean up stale tower references instead of crashing.
+                                if storage.towers then
+                                        for _, tdata in pairs(storage.towers) do
+                                                if tdata.mirrors and tdata.mirrors[mid] then
+                                                        tdata.mirrors[mid] = nil
+                                                end
+                                        end
+                                end
+                                storage.mirrors[mid].tower = nil
+                        elseif prior_tower.unit_number == tower.unit_number then
+                                -- We are already linked to this tower!
+                                return
+                        else
+                                --add the previous link to in_range
+                                db.mark_in_range(mid, prior_tower)
+                                -- Clean up previous link
+                                db.remove_mirror_from_tower { mid = mid, tid = prior_tower.unit_number }
+                        end
+                end
 		-- If this tower was marked in range before, remove it
 		db.mark_out_range(mid, tower)
 		-- Link in the mirror -> tower direction

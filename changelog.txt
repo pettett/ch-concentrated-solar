@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.5.2
+Date: 2026.01.14
+  Bugfixes:
+    - Guard against stale mirror -> tower links when relinking (prevents crash when towers are
+      replaced by other mods).
+---------------------------------------------------------------------------------------------------
 Version: 0.5.1
 Date: 2025.07.19
   Changes:
