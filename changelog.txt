@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.6.0
+Date: 2026.06.27
+  Features:
+    - 2.1 support (single line change).
+    - Support scaling solar intensity on space platforms (I was lazy before. I still am but it is fixed).
+  Changes:
+    - [Credit: psyanara] Configuration parameters.
+    - [Credit: psyanara] German, Spanish, Chinese (Simplified and Traditional) translations.
+---------------------------------------------------------------------------------------------------
 Version: 0.5.1
 Date: 2025.07.19
   Changes:

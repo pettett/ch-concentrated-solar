@@ -125,7 +125,7 @@ ui.update_gui = function(gui)
 	local daylight = control_util.calc_sun(surface)
 
 
-	local fluid = tower.fluidbox[1]
+	local fluid = tower.get_fluid(1)
 
 	if not fluid then
 		fluid = {

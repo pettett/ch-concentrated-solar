@@ -46,6 +46,8 @@ function control_util.calc_sun(surface)
 end
 
 function control_util.average_daylight(surface)
+	if surface.platform then return 1.0 end
+
 	-- Ticks for 3 regions of time
 	local ticks_sunset = (surface.evening - surface.dusk)
 	local ticks_night = (surface.morning - surface.evening)

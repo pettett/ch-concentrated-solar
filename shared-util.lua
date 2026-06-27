@@ -18,7 +18,7 @@ shared_util.fluid_temp_per_mirror = settings.startup["ch-fluid-temp-per-mirror"]
 
 
 
-shared_util.tower_capture_radius =  settings.startup["ch-tower-capture-radius"].value -- 35
+shared_util.tower_capture_radius = settings.startup["ch-tower-capture-radius"].value -- 35
 shared_util.tower_capture_radius_sqr = shared_util.tower_capture_radius ^ 2
 
 
@@ -43,8 +43,23 @@ local max_mirrors_per_tower = math.ceil(shared_util.solar_max_temp / shared_util
 ---@param surface LuaSurface
 ---@return number
 function shared_util.surface_solar_mult(surface)
-	return surface.solar_power_multiplier *     -- Normal mult
-		(surface.get_property("solar-power") / 100.0) -- Annoying space age mult >:(
+	-- Measured in percent for some reason
+	platform_mult = 100.0
+	if surface.platform then
+		if surface.platform.space_location then
+			platform_mult = surface.platform.space_location.solar_power_in_space
+		end
+
+		if surface.platform.space_connection then
+			t = surface.platform.distance
+			platform_mult =
+				surface.platform.space_connection.from.solar_power_in_space * (1.0 - t) +
+				surface.platform.space_connection.to.solar_power_in_space * t
+		end
+	end
+
+	return surface.solar_power_multiplier *                         -- Normal mult
+		surface.get_property("solar-power") * 0.01 * platform_mult * 0.01 -- Annoying space age mult >:(
 end
 
 -- Maximum mirrors to fully saturate a tower, based on the solar power multiplier of its surface.
