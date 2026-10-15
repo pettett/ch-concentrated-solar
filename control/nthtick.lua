@@ -1,8 +1,8 @@
-local nthtick = {}
+local nthtick      = {}
 
 local control_util = require "control-util"
-local beams = require "control.beams"
-local db = require "control.database"
+local beams        = require "control.beams"
+local db           = require "control.database"
 
 function nthtick.on_nth_tick_beam_update(event)
 	--control_util.consistencyCheck()
@@ -79,10 +79,8 @@ function nthtick.on_nth_tick_tower_update(event)
 			if db.valid_tid(tid) then
 				local sun = control_util.calc_sun(tower.surface)
 
-				tower.clear_fluid_inside()
-
 				if sun > 0 and table_size(mirrors) > 0 then
-					local amount = control_util.surface_solar_mult(tower.surface) *
+					local target_amount = control_util.surface_solar_mult(tower.surface) *
 						control_util.fluid_temp_per_mirror *
 						sun *
 						table_size(mirrors)
@@ -90,12 +88,27 @@ function nthtick.on_nth_tick_tower_update(event)
 					-- game.print("updating tower " .. tid .. "power" .. amount)
 
 					-- set to temperature and amount, as fluid turrets cannot display temperature
-					if amount > 0.01 then
-						tower.insert_fluid {
-							name        = control_util.mod_prefix .. "solar-fluid",
-							amount      = amount,
-							temperature = amount * (1.0 + tower.quality.level * 0.3)
-						}
+					local fluid = tower.get_fluid_contents()
+					local current_amount = 0
+
+					if fluid ~= nil then
+						current_amount = fluid[control_util.mod_prefix .. "solar-fluid"] or 0
+					end
+
+					local input_amount = target_amount - current_amount
+					if input_amount > 0.01 then
+						tower.insert_fluid({
+							name = control_util.mod_prefix .. "solar-fluid",
+							temperature = input_amount * (1.0 + tower.quality.level * 0.3),
+							amount = input_amount
+						})
+					elseif input_amount < -0.01 then
+						if input_amount < -0.01 then
+							tower.remove_fluid({
+								name = control_util.mod_prefix .. "solar-fluid",
+								amount = -input_amount
+							})
+						end
 					end
 				end
 			else

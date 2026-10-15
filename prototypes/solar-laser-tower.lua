@@ -1,6 +1,5 @@
 local data_util = require("data-util")
 local sounds = require("__base__.prototypes.entity.sounds")
-local util = require "util"
 local hit_effects = require("__base__.prototypes.entity.hit-effects")
 
 
@@ -76,6 +75,9 @@ data:extend {
 		activation_buffer_ratio = 1 / 6,
 		fluid_buffer_size = data_util.solar_max_temp,
 
+		circuit_connector = circuit_connector_definitions["storage-tank"],
+		circuit_wire_max_distance = default_circuit_wire_max_distance,
+
 		attack_parameters =
 		{
 			type              = "stream",
@@ -96,22 +98,6 @@ data:extend {
 				action =
 				{
 					{
-						type = "area",
-						radius = 2.5,
-						action_delivery =
-						{
-							type = "instant",
-							target_effects =
-							{
-								{
-									type = "damage",
-									damage = { amount = 3, type = "laser" },
-									apply_damage_to_trees = false
-								}
-							}
-						}
-					},
-					{
 						type = "direct",
 						action_delivery =
 						{
@@ -130,9 +116,24 @@ data:extend {
 								-- 	type = "script",
 								-- 	effect_id = data_util.mod_prefix .. "sunlight-laser-damage"
 								-- },
-
 							}
 						},
+					},
+					{
+						type = "area",
+						radius = 2.5,
+						action_delivery =
+						{
+							type = "instant",
+							target_effects =
+							{
+								{
+									type = "damage",
+									damage = { amount = 3, type = "laser" },
+									apply_damage_to_trees = false
+								}
+							}
+						}
 					}
 				}
 			}
