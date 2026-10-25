@@ -41,10 +41,11 @@ data:extend {
 				volume              = data_util.solar_max_temp,
 				pipe_connections    = {},
 				production_type     = "input",
-				minimum_temperature = 10.0,
-				-- maximum_temperature = data_util.solar_max_temp,
+				-- Factorio 2.1.22+: temperature limits moved from FluidBox to FluidEnergySource (see below)
 				filter              = data_util.mod_prefix .. "solar-fluid"
 			},
+			-- Factorio 2.1.22+ replacement for FluidBox::minimum_temperature
+			minimum_input_temperature = 10.0,
 			--destroy_non_fuel_fluid = true,
 			burns_fluid = false,
 			scale_fluid_usage = true,
